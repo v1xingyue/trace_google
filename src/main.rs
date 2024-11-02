@@ -3,7 +3,7 @@ use serde_json::json;
 use std::error::Error;
 
 async fn get_token_from_metadata_server() -> Result<String, Box<dyn Error>> {
-    let client = Client::new();
+    let client: Client = Client::new();
     let response = client
         .get("http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token")
         .header("Metadata-Flavor", "Google") // 必须添加此 header
@@ -28,7 +28,7 @@ async fn send_log(token: &str) -> anyhow::Result<()> {
 
     // 创建日志条目请求体
     let log_entry = json!({
-        "logName": "projects/YOUR_PROJECT_ID/logs/my-log",  // 将 YOUR_PROJECT_ID 替换为你的 Google Cloud 项目 ID
+        "logName": "projects/level-poetry-395302/logs/my-log",  // 将 YOUR_PROJECT_ID 替换为你的 Google Cloud 项目 ID
         "resource": {
             "type": "global"
         },
