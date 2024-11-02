@@ -34,7 +34,12 @@ async fn send_log(token: &str) -> anyhow::Result<()> {
         },
         "entries": [
             {
-                "textPayload": "Hello, Google Cloud Logging!"
+                // "textPayload": "Hello, Google Cloud Logging!"
+                "jsonPayload": {
+                    "message": "Hello, Google Cloud Logging!",
+                    "int_value": 123,
+                    "ok": true
+                }
             }
         ]
     });
@@ -63,7 +68,7 @@ async fn send_log(token: &str) -> anyhow::Result<()> {
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    let result = match get_token_from_metadata_server().await {
+    match get_token_from_metadata_server().await {
         Ok(token) => send_log(&token).await,
         Err(e) => {
             eprintln!("Error: {:?}", e);
