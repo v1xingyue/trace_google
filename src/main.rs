@@ -30,11 +30,13 @@ async fn send_log(token: &str) -> anyhow::Result<()> {
     // generate a random number between 1 and 100
     let random_number = rand::thread_rng().gen_range(200..300);
 
+    println!("current number : {}", random_number);
+
     // 创建日志条目请求体
     let log_entry = json!({
         "logName": "projects/level-poetry-395302/logs/my-log",  // 将 YOUR_PROJECT_ID 替换为你的 Google Cloud 项目 ID
         "resource": {
-            "type": "Global"
+            "type": "global"
         },
         "entries": [
             {
