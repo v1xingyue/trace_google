@@ -1,3 +1,4 @@
+use rand::Rng;
 use reqwest::Client;
 use serde_json::json;
 use std::error::Error;
@@ -26,18 +27,21 @@ async fn send_log(token: &str) -> anyhow::Result<()> {
     // Google Cloud Logging 的 API 端点
     let url = "https://logging.googleapis.com/v2/entries:write";
 
+    // generate a random number between 1 and 100
+    let random_number = rand::thread_rng().gen_range(200..300);
+
     // 创建日志条目请求体
     let log_entry = json!({
         "logName": "projects/level-poetry-395302/logs/my-log",  // 将 YOUR_PROJECT_ID 替换为你的 Google Cloud 项目 ID
         "resource": {
-            "type": "global"
+            "type": "Global"
         },
         "entries": [
             {
                 // "textPayload": "Hello, Google Cloud Logging!"
                 "jsonPayload": {
                     "message": "Hello, Google Cloud Logging!",
-                    "int_value": 123,
+                    "int_value": random_number,
                     "ok": true
                 }
             }
